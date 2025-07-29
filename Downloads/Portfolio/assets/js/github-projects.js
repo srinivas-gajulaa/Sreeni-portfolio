@@ -1,39 +1,30 @@
-// assets/js/github-projects.js
+// File: assets/js/github-projects.js
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- CONFIGURATION ---
   const projectsContainer = document.getElementById('github-projects-container');
+  const apiUrl = '/api/github';
 
-  // This is the URL to your Vercel Serverless Function (we will create this in the next step)
-  const apiUrl = '/api/github'; 
-  
-  // --- FETCHING AND DISPLAYING PROJECTS ---
   fetch(apiUrl)
     .then(response => {
+      // This part is crucial for handling errors from the API
       if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
+        return response.json().then(errorData => {
+          // Throw an error that includes the server's specific message
+          throw new Error(errorData.errorMessage || 'An unknown error occurred.');
+        });
       }
       return response.json();
     })
     .then(repos => {
-      // Clear the 'Loading...' message
-      projectsContainer.innerHTML = ''; 
-
-      // OPTIONAL: Filter out specific repositories you don't want to show
-      const reposToExclude = new Set(['srinivas-gajulaa']); // Add any repo names to exclude here
+      projectsContainer.innerHTML = '';
+      const reposToExclude = new Set(['srinivas-gajulaa']);
       const filteredRepos = repos.filter(repo => !reposToExclude.has(repo.name));
-
-      // Re-create the box-container to hold the cards
       const boxContainer = document.createElement('div');
       boxContainer.className = 'box-container';
 
       filteredRepos.forEach(repo => {
-        // Use the same 'box' class as your original design
         const projectCard = document.createElement('div');
         projectCard.className = 'box';
-
-        // Populate the card with repository data
-        // This HTML structure is based on your original project boxes
         projectCard.innerHTML = `
           <img src="assets/images/projects/project_placeholder.png" alt="${repo.name}">
           <div class="content">
@@ -51,14 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
           </div>
         `;
-        
         boxContainer.appendChild(projectCard);
       });
-      // Add the container with all the project cards to the page
       projectsContainer.appendChild(boxContainer);
     })
     .catch(error => {
-      console.error('Error fetching GitHub repos:', error);
-      projectsContainer.innerHTML = '<p style="text-align: center;">Sorry, my projects could not be loaded at this time.</p>';
+      console.error('Detailed error from server:', error);
+      // IMPORTANT: Display the specific error message on the page
+      projectsContainer.innerHTML = `<p style="text-align: center; color: red; font-weight: bold;">Error: ${error.message}</p>`;
     });
 });
