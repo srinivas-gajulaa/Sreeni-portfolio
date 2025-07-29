@@ -1,8 +1,6 @@
 // File: assets/js/github-projects.js
 
 document.addEventListener('DOMContentLoaded', () => {
-  // The script will find the container with the ID 'github-projects-container'.
-  // Since it now ALSO has the class 'box-container', your CSS will apply correctly.
   const projectsContainer = document.getElementById('github-projects-container');
   const apiUrl = '/api/github';
 
@@ -16,9 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return response.json();
     })
     .then(repos => {
-      // Clear the "Loading..." message
       projectsContainer.innerHTML = '';
-
       const reposToExclude = new Set(['srinivas-gajulaa']);
       const filteredRepos = repos.filter(repo => !reposToExclude.has(repo.name));
 
@@ -27,14 +23,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // Add each project card directly to the container
       filteredRepos.forEach(repo => {
         const projectCard = document.createElement('div');
         projectCard.className = 'box';
 
+        // This is the only line that changes.
+        // It now uses the repo's full name (e.g., "srinivas-gajulaa/Portfolio") to get a unique image.
+        const imageUrl = `https://opengraph.githubassets.com/1/${repo.full_name}`;
+
         projectCard.innerHTML = `
           <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer">
-            <img src="assets/images/projects/project_placeholder.png" alt="${repo.name}">
+            <img src="${imageUrl}" alt="${repo.name}">
           </a>
           <div class="content">
             <div class="tag">
