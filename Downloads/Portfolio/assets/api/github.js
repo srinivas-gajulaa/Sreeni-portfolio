@@ -1,6 +1,6 @@
 // File: /api/github.js
 
-// This is a Node.js serverless function
+// This is the final production code
 export default async function handler(request, response) {
   const username = 'srinivas-gajulaa'; // Your GitHub username
   const token = process.env.GITHUB_PAT; // Access the token securely from Vercel
@@ -17,14 +17,13 @@ export default async function handler(request, response) {
 
     // Handle any errors from the GitHub API
     if (!githubResponse.ok) {
-      // This will now provide a more specific error if the token is bad
       const errorBody = await githubResponse.text();
       throw new Error(`GitHub API responded with ${githubResponse.status}: ${errorBody}`);
     }
 
     const data = await githubResponse.json();
-    
-    // Send the clean data back to your frontend script
+
+    // Send the project data back to your frontend script
     response.status(200).json(data);
 
   } catch (error) {
