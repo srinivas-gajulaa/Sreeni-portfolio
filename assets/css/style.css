@@ -1312,31 +1312,27 @@ header .logo:hover {
 
 .certifications {
   background: #02083a;
-  padding-bottom: 4rem; /* Reduced padding to remove extra space */
+  padding-bottom: 4rem;
 }
-
 .certifications .heading {
-  color: white; /* Main heading text color */
+  color: white;
 }
-
 .certifications .heading span {
-  color: #ffae00; /* Highlighted word color */
+  color: #ffaE00;
 }
-
 .certifications .box-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 2rem;
-  max-width: 95rem; /* Sets a max-width for the grid */
-  margin: 4rem auto 0 auto; /* Centers the grid container */
+  max-width: 95rem;
+  margin: 4rem auto 0 auto;
 }
-
 .certifications .box {
-  flex: 0 1 42rem; /* Creates a stable, non-growing grid item */
+  flex: 0 1 42rem;
   max-width: 45rem;
   display: flex;
-  align-items: flex-start; /* Aligns content to the top of the card */
+  align-items: flex-start;
   gap: 2rem;
   padding: 2.5rem;
   border-radius: 1rem;
@@ -1344,40 +1340,33 @@ header .logo:hover {
   background: #f7f7f7;
   transition: transform 0.2s linear;
 }
-
 .certifications .box:hover {
   transform: translateY(-5px);
 }
-
 .certifications .box .cert-image img {
   height: 80px;
   width: 80px;
+  object-fit: contain;
+  margin-top: 1rem;
 }
-
-/* Card Content Styles (Titles, Text, etc.) */
 .certifications .box .cert-content h3 {
   font-size: 2rem;
   color: #002057;
   font-weight: 700;
 }
-
 .certifications .box .cert-content .cert-provider {
   font-size: 1.5rem;
   color: #555;
   padding: 0.5rem 0;
 }
-
 .certifications .box .cert-content .cert-date {
   font-size: 1.4rem;
   color: #333;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
-
-/* "Verify" Button Styles */
 .certifications .box .cert-content .cert-btn {
   margin-top: 1.5rem;
 }
-
 .certifications .box .cert-content .cert-btn .btn {
   padding: 1rem 2rem;
   border-radius: 0.5em;
@@ -1385,17 +1374,31 @@ header .logo:hover {
   background: #2506ad;
   box-shadow: 0px 5px 10px rgba(48, 68, 247, 0.4);
 }
-
 .certifications .box .cert-content .cert-btn .btn:hover {
   background: #1a047e;
 }
-
 .certifications .box .cert-content .cert-btn .btn span {
   font-weight: 600;
   font-size: 1.5rem;
 }
-
 .certifications .box .cert-content .cert-btn .btn i {
   margin-left: 0.8rem;
   font-size: 1rem;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 900px) {
+  .certifications .box-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .certifications .box {
+    max-width: 90vw;
+    flex-direction: column;
+    align-items: center;
+  }
+  .certifications .box .cert-image img {
+    margin-bottom: 1rem;
+    margin-top: 0;
+  }
 }
